@@ -1,36 +1,43 @@
-# divide and conquer
-def findmid(a):
-    if len(a)%2!=0:
-        mid = (len(a)/2)-(1/2)
-    if len(a)%2==0:
-        mid = (len(a)/2)-1
+# doing max subarray problem with divide and conquer...
+import math
+
+def findmid(arr):
+    mid = 0
+    if len(arr)%2 == 0:
+        mid = int(len(arr) - 1)
+    if len(arr)%2 != 0:
+        y = math.floor(len(arr)/2) - 0.5
+        mid = int(y)
     return mid
-
-def findmax(a):
-    mid = findmid(a)
-    print mid
-    leftmax = -10000
-    sum=0
-    lefti=0
+# variable mid is can now be used as an index for the array to denote the middle
+def initialize(arr):
+    low = 0
+    mid = findmid(arr)
+    high = int(len(arr) - 1)
+    return low, mid, high
+low = 0
+def findmaxXsubarray(arr, low, mid, high):
+    leftsum = -100000
+    sum = 0
+    maxleft = 0
     for i in range(mid, -1, -1):
-        sum += a[i]
-        if leftmax<sum:
-            leftmax=sum
-            lefti=i
-    rightmax=-10000
-    sumr=0
-    righti=10
-    for j in range(mid+1, len(a)):
-        sumr+=a[j]
-        if rightmax<sumr:
-            rightmax=sumr
-            righti=j
-    maxXsubarray = rightmax+leftmax
-    print maxXsubarray
-    print [lefti,righti]
-def fxn(a):
-    findmax(a)
+        sum = sum + arr[i]
+        if sum > leftsum:
+            leftsum = sum
+            maxleft = i
+    rightsum = -100000
+    sum = 0
+    rightmax = 0
+    for j in range(mid+1, high+1):
+        sum = sum + arr[j]
+        if sum > rightsum:
+            rightsum = sum
+            rightmax = j
+    print (maxleft, rightmax, leftsum+rightsum)
 
-
-a = [-5, 1, 3, 7, -6, 16, 18, -800, 19, -500]
-fxn(a)
+def fxn(arr):
+    findmid(arr)
+    low, mid, high = initialize(arr)
+    findmaxXsubarray(arr, low, mid, high)
+arr = [13, 3, -25, 20, -3, 16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7]
+fxn(arr)
