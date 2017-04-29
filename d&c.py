@@ -7,6 +7,7 @@ a = [-5, 10, -1, 15, 25, 13, -10]
 
 
 def maxX(a, low, mid, high):
+    #finds the maximum subarray which crosses the midpoint (found in above function) inside an array
     mid = midIndex(a)
     sumL = -float('inf')
     leftind = 0
@@ -30,6 +31,7 @@ def maxX(a, low, mid, high):
     return leftind, rightind, sum
 
 def recursion(a, low, high):
+    #recursion over the left and right halves, and comparison as to the largest overall subarray
     if high - 1 == low:
         return low, high, a[low]
     else:
@@ -43,5 +45,5 @@ def recursion(a, low, high):
             return right_low, right_high, right_sum
         elif cross_sum > left_sum and cross_sum > right_sum:
             return cross_low, cross_high, cross_sum
-
+    #RuntimeError: maximum recursion depth exceeded while calling a Python object
 recursion(a, 0, len(a))
